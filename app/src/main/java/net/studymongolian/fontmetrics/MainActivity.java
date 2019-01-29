@@ -3,15 +3,21 @@ package net.studymongolian.fontmetrics;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+import static net.studymongolian.fontmetrics.FontMetricsView.DEFAULT_FONT_SIZE_PX;
+import static net.studymongolian.fontmetrics.FontMetricsView.DEFAULT_TEXT;
+
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     FontMetricsView myFontMetricsView; // custom view
+    TextView normalTextView, normalTextView2;
     EditText mTextStringEditText;
     EditText mFontSizeEditText;
     CheckBox cbTop;
@@ -30,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView tvBounds;
     TextView tvMeasuredWidth;
     TextView tvLeading;
+    TextView tvAscentDescentHeight, tvTopBottomHeight, tvNormalHeight;
 
 
     @Override
@@ -37,22 +44,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        myFontMetricsView = (FontMetricsView) findViewById(R.id.viewWindow);
-        mTextStringEditText = (EditText) findViewById(R.id.etTextString);
-        mFontSizeEditText = (EditText) findViewById(R.id.etFontSize);
+        myFontMetricsView = findViewById(R.id.viewWindow);
+        normalTextView = findViewById(R.id.textView);
+        normalTextView2 = findViewById(R.id.textView2);
+        mTextStringEditText = findViewById(R.id.etTextString);
+        mFontSizeEditText = findViewById(R.id.etFontSize);
 
-        mTextStringEditText.setText("My text line");
-        mFontSizeEditText.setText("200");
-
+        mTextStringEditText.setText(DEFAULT_TEXT);
+        mFontSizeEditText.setText(String.valueOf(DEFAULT_FONT_SIZE_PX));
+        normalTextView.setText(DEFAULT_TEXT);
+        normalTextView2.setText(DEFAULT_TEXT);
+        normalTextView.setTextIsSelectable(true);
+        normalTextView2.setTextIsSelectable(true);
+        normalTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, DEFAULT_FONT_SIZE_PX);
+        normalTextView2.setTextSize(TypedValue.COMPLEX_UNIT_PX, DEFAULT_FONT_SIZE_PX);
 
         findViewById(R.id.updateButton).setOnClickListener(this);
-        cbTop = (CheckBox) findViewById(R.id.cbTop);
-        cbAscent = (CheckBox) findViewById(R.id.cbAscent);
-        cbBaseline = (CheckBox) findViewById(R.id.cbBaseline);
-        cbDescent = (CheckBox) findViewById(R.id.cbDescent);
-        cbBottom = (CheckBox) findViewById(R.id.cbBottom);
-        cbBounds = (CheckBox) findViewById(R.id.cbTextBounds);
-        cbMeasuredWidth = (CheckBox) findViewById(R.id.cbWidth);
+        cbTop = findViewById(R.id.cbTop);
+        cbAscent = findViewById(R.id.cbAscent);
+        cbBaseline = findViewById(R.id.cbBaseline);
+        cbDescent = findViewById(R.id.cbDescent);
+        cbBottom = findViewById(R.id.cbBottom);
+        cbBounds = findViewById(R.id.cbTextBounds);
+        cbMeasuredWidth = findViewById(R.id.cbWidth);
 
         cbTop.setOnClickListener(this);
         cbAscent.setOnClickListener(this);
@@ -62,33 +76,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         cbBounds.setOnClickListener(this);
         cbMeasuredWidth.setOnClickListener(this);
 
-        tvTop = (TextView) findViewById(R.id.tvTop);
-        tvAscent = (TextView) findViewById(R.id.tvAscent);
-        tvBaseline = (TextView) findViewById(R.id.tvBaseline);
-        tvDescent = (TextView) findViewById(R.id.tvDescent);
-        tvBottom = (TextView) findViewById(R.id.tvBottom);
-        tvBounds = (TextView) findViewById(R.id.tvTextBounds);
-        tvMeasuredWidth = (TextView) findViewById(R.id.tvWidth);
-        tvLeading = (TextView) findViewById(R.id.tvLeadingValue);
+        tvTop = findViewById(R.id.tvTop);
+        tvAscent = findViewById(R.id.tvAscent);
+        tvBaseline = findViewById(R.id.tvBaseline);
+        tvDescent = findViewById(R.id.tvDescent);
+        tvBottom = findViewById(R.id.tvBottom);
+        tvBounds = findViewById(R.id.tvTextBounds);
+        tvMeasuredWidth = findViewById(R.id.tvWidth);
+        tvLeading = findViewById(R.id.tvLeadingValue);
+        tvAscentDescentHeight = findViewById(R.id.tvADHeightValue);
+        tvTopBottomHeight = findViewById(R.id.tvTBHeightValue);
+        tvNormalHeight = findViewById(R.id.tvNormalHeightValue);
         updateTextViews();
 
     }
-
-
 
     @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
             case R.id.updateButton:
-                myFontMetricsView.setText(mTextStringEditText.getText().toString());
+                String input = mTextStringEditText.getText().toString();
+                myFontMetricsView.setText(input);
+                normalTextView.setText(input);
+                normalTextView2.setText(input);
                 int fontSize;
                 try {
                     fontSize = Integer.valueOf(mFontSizeEditText.getText().toString());
-                }catch (NumberFormatException e) {
+                } catch (NumberFormatException e) {
                     fontSize = FontMetricsView.DEFAULT_FONT_SIZE_PX;
                 }
                 myFontMetricsView.setTextSizeInPixels(fontSize);
+                normalTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, fontSize);
+                normalTextView2.setTextSize(TypedValue.COMPLEX_UNIT_PX, fontSize);
                 updateTextViews();
                 hideKeyboard(getCurrentFocus());
                 break;
@@ -115,19 +135,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
 
-
     }
 
     public void updateTextViews() {
-        tvTop.setText(String.valueOf(myFontMetricsView.getFontMetrics().top));
-        tvAscent.setText(String.valueOf(myFontMetricsView.getFontMetrics().ascent));
+        float top = myFontMetricsView.getFontMetrics().top;
+        float ascent = myFontMetricsView.getFontMetrics().ascent;
+        float descent = myFontMetricsView.getFontMetrics().descent;
+        float bottom = myFontMetricsView.getFontMetrics().bottom;
+
+        tvTop.setText(String.valueOf(top));
+        tvAscent.setText(String.valueOf(ascent));
         tvBaseline.setText(String.valueOf(0f));
-        tvDescent.setText(String.valueOf(myFontMetricsView.getFontMetrics().descent));
-        tvBottom.setText(String.valueOf(myFontMetricsView.getFontMetrics().bottom));
-        tvBounds.setText("w = " + String.valueOf(myFontMetricsView.getTextBounds().width() +
-                "     h = " + String.valueOf(myFontMetricsView.getTextBounds().height())));
+        tvDescent.setText(String.valueOf(descent));
+        tvBottom.setText(String.valueOf(bottom));
+        tvBounds.setText(
+                "w: " + myFontMetricsView.getTextBounds().width() +
+                        ", h: " + myFontMetricsView.getTextBounds().height()
+        );
         tvMeasuredWidth.setText(String.valueOf(myFontMetricsView.getMeasuredTextWidth()));
         tvLeading.setText(String.valueOf(myFontMetricsView.getFontMetrics().leading));
+        tvAscentDescentHeight.setText(String.valueOf(descent - ascent));
+        tvTopBottomHeight.setText(String.valueOf(bottom - top));
+        tvNormalHeight.setText(String.valueOf(normalTextView2.getHeight()));
     }
 
     private void hideKeyboard(View view) {
@@ -136,4 +165,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
+
 }

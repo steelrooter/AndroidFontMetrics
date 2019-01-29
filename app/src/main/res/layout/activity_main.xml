@@ -1,38 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="net.studymongolian.fontmetrics.MainActivity">
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="net.studymongolian.fontmetrics.MainActivity"
+    >
 
-
-    <net.studymongolian.fontmetrics.FontMetricsView
-        android:id="@+id/viewWindow"
+    <RelativeLayout
+        android:id="@+id/textContainer"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="@android:color/white"
-        android:padding="20dp"/>
+        android:layout_height="wrap_content"
+        >
+
+        <net.studymongolian.fontmetrics.FontMetricsView
+            android:id="@+id/viewWindow"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_toLeftOf="@+id/textView"
+            android:background="@android:color/white"
+            android:padding="20dp"
+            />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/viewWindow"
+            android:layout_alignParentRight="true"
+            android:maxLines="1"
+            android:paddingTop="20dp"
+            android:singleLine="true"
+            android:textColorHighlight="#00FF00"
+            tools:text="My text line"
+            tools:textSize="200px"
+            />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView"
+            android:layout_alignParentRight="true"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColorHighlight="#00FF00"
+            tools:text="My text line"
+            tools:textSize="200px"
+            />
+
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/viewWindow">
+        android:layout_below="@id/textContainer"
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            >
 
             <LinearLayout
                 android:id="@+id/contentLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                >
 
                 <EditText
                     android:id="@+id/etTextString"
@@ -40,24 +79,26 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
                     android:layout_weight="0.5"
-                    android:hint="My text line"/>
+                    android:hint="My text line"
+                    />
 
                 <Button
                     android:id="@+id/updateButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.25"
-                    android:text="Update text"/>
+                    android:text="Update text"
+                    />
 
                 <EditText
                     android:id="@+id/etFontSize"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.25"
-                    android:hint="17"
-                    android:inputType="number"/>
+                    android:hint="Pixels"
+                    android:inputType="number"
+                    />
             </LinearLayout>
-
 
             <CheckBox
                 android:id="@+id/cbTop"
@@ -66,7 +107,8 @@
                 android:layout_below="@id/contentLayout"
                 android:checked="true"
                 android:text="Top"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                />
 
             <TextView
                 android:id="@+id/tvTop"
@@ -77,7 +119,8 @@
                 android:layout_toRightOf="@id/cbTop"
                 android:text="10"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/darker_gray"/>
+                android:textColor="@android:color/darker_gray"
+                />
 
             <CheckBox
                 android:id="@+id/cbAscent"
@@ -88,7 +131,8 @@
                 android:text="Ascent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
 
-                android:theme="@style/Theme.AppCompat.CheckBoxAscent"/>
+                android:theme="@style/Theme.AppCompat.CheckBoxAscent"
+                />
 
             <TextView
                 android:id="@+id/tvAscent"
@@ -99,7 +143,8 @@
                 android:layout_toRightOf="@id/cbTop"
                 android:text="10"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/darker_gray"/>
+                android:textColor="@android:color/darker_gray"
+                />
 
             <CheckBox
                 android:id="@+id/cbBaseline"
@@ -109,7 +154,8 @@
                 android:checked="true"
                 android:text="Baseline"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:theme="@style/Theme.AppCompat.CheckboxBaseline"/>
+                android:theme="@style/Theme.AppCompat.CheckboxBaseline"
+                />
 
             <TextView
                 android:id="@+id/tvBaseline"
@@ -120,7 +166,8 @@
                 android:layout_toRightOf="@id/cbTop"
                 android:text="10"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/darker_gray"/>
+                android:textColor="@android:color/darker_gray"
+                />
 
             <CheckBox
                 android:id="@+id/cbDescent"
@@ -131,7 +178,8 @@
                 android:checked="true"
                 android:text="Descent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:theme="@style/Theme.AppCompat.CheckboxDescent"/>
+                android:theme="@style/Theme.AppCompat.CheckboxDescent"
+                />
 
             <TextView
                 android:id="@+id/tvDescent"
@@ -142,17 +190,19 @@
                 android:layout_toRightOf="@id/cbTop"
                 android:text="10"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/darker_gray"/>
+                android:textColor="@android:color/darker_gray"
+                />
 
             <CheckBox
                 android:id="@+id/cbBottom"
-                android:theme="@style/Theme.AppCompat.CheckboxBottom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/cbDescent"
                 android:checked="true"
                 android:text="Bottom"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:theme="@style/Theme.AppCompat.CheckboxBottom"
+                />
 
             <TextView
                 android:id="@+id/tvBottom"
@@ -163,17 +213,19 @@
                 android:layout_toRightOf="@id/cbTop"
                 android:text="10"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/darker_gray"/>
+                android:textColor="@android:color/darker_gray"
+                />
 
             <CheckBox
                 android:id="@+id/cbWidth"
-                android:theme="@style/Theme.AppCompat.MeasuerdWidth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/cbBottom"
                 android:checked="true"
                 android:text="Measured width"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:theme="@style/Theme.AppCompat.MeasuerdWidth"
+                />
 
             <TextView
                 android:id="@+id/tvWidth"
@@ -184,17 +236,19 @@
                 android:layout_toRightOf="@id/cbTop"
                 android:text="10"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/darker_gray"/>
+                android:textColor="@android:color/darker_gray"
+                />
 
             <CheckBox
                 android:id="@+id/cbTextBounds"
-                android:theme="@style/Theme.AppCompat.TextBounds"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/cbWidth"
                 android:checked="true"
                 android:text="Text bounds"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:theme="@style/Theme.AppCompat.TextBounds"
+                />
 
             <TextView
                 android:id="@+id/tvTextBounds"
@@ -205,7 +259,8 @@
                 android:layout_toRightOf="@id/cbTop"
                 android:text="10"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/darker_gray"/>
+                android:textColor="@android:color/darker_gray"
+                />
 
             <TextView
                 android:id="@+id/tvLeadingLabel"
@@ -216,7 +271,8 @@
                 android:layout_marginTop="10dp"
                 android:text="Leading"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/white"/>
+                android:textColor="@android:color/white"
+                />
 
             <TextView
                 android:id="@+id/tvLeadingValue"
@@ -225,13 +281,85 @@
                 android:layout_alignBaseline="@id/tvLeadingLabel"
                 android:layout_marginLeft="110dp"
                 android:layout_toRightOf="@id/cbTop"
-                android:text="10"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/darker_gray"/>
+                android:textColor="@android:color/darker_gray"
+                tools:text="0.0"
+                />
+
+            <TextView
+                android:id="@+id/tvADHeightLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvLeadingLabel"
+                android:layout_marginLeft="33dp"
+                android:layout_marginTop="10dp"
+                android:text="A-D height"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/white"
+                />
+
+            <TextView
+                android:id="@+id/tvADHeightValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tvADHeightLabel"
+                android:layout_marginLeft="110dp"
+                android:layout_toRightOf="@id/cbTop"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/darker_gray"
+                tools:text="0.0"
+                />
+
+            <TextView
+                android:id="@+id/tvTBHeightLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvADHeightLabel"
+                android:layout_marginLeft="33dp"
+                android:layout_marginTop="10dp"
+                android:text="T-B height"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/white"
+                />
+
+            <TextView
+                android:id="@+id/tvTBHeightValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tvTBHeightLabel"
+                android:layout_marginLeft="110dp"
+                android:layout_toRightOf="@id/cbTop"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/darker_gray"
+                tools:text="0.0"
+                />
+
+            <TextView
+                android:id="@+id/tvNormalHeightLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvTBHeightLabel"
+                android:layout_marginLeft="33dp"
+                android:layout_marginTop="10dp"
+                android:text="Normal height"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/white"
+                />
+
+            <TextView
+                android:id="@+id/tvNormalHeightValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tvNormalHeightLabel"
+                android:layout_marginLeft="110dp"
+                android:layout_toRightOf="@id/cbTop"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/darker_gray"
+                tools:text="0.0"
+                />
+
         </RelativeLayout>
 
-
     </ScrollView>
-
 
 </RelativeLayout>

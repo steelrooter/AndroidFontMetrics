@@ -8,14 +8,13 @@ import android.graphics.Rect;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.Toast;
 
 
 public class FontMetricsView extends View {
 
-    public final static int DEFAULT_FONT_SIZE_PX = 200;
-    //private static final int PURPLE = Color.parseColor("#9315db");
-    //private static final int ORANGE = Color.parseColor("#ff8a00");
+    public static final String DEFAULT_TEXT = "Tasty";
+    public static final int DEFAULT_FONT_SIZE_PX = 200;
+
     private static final float STROKE_WIDTH = 5.0f;
 
     private String mText;
@@ -29,7 +28,6 @@ public class FontMetricsView extends View {
     private Paint mTextBoundsPaint;
     private TextPaint mTextPaint;
     private Paint mLinePaint;
-    private Paint mRectPaint;
     private Rect mBounds;
     private boolean mIsTopVisible;
     private boolean mIsAscentVisible;
@@ -52,7 +50,7 @@ public class FontMetricsView extends View {
     }
 
     private void init() {
-        mText = "My text line";
+        mText = DEFAULT_TEXT;
         mTextSize = DEFAULT_FONT_SIZE_PX;
         mTextPaint = new TextPaint();
         mTextPaint.setAntiAlias(true);
@@ -91,12 +89,6 @@ public class FontMetricsView extends View {
         mTextBoundsPaint.setColor(getResources().getColor(R.color.text_bounds));
         mTextBoundsPaint.setStrokeWidth(STROKE_WIDTH);
         mTextBoundsPaint.setStyle(Paint.Style.STROKE);
-
-        mRectPaint = new Paint();
-        mRectPaint.setColor(Color.BLACK);
-        mRectPaint.setStrokeWidth(STROKE_WIDTH);
-        mRectPaint.setStyle(Paint.Style.STROKE);
-
 
         mBounds = new Rect();
 
@@ -137,7 +129,6 @@ public class FontMetricsView extends View {
         if (mIsAscentVisible) {
             startY = mTextPaint.getFontMetrics().ascent;
             stopY = startY;
-            //mLinePaint.setColor(Color.GREEN);
             canvas.drawLine(startX, startY, stopX, stopY, mAscentPaint);
         }
 
@@ -150,16 +141,14 @@ public class FontMetricsView extends View {
         if (mIsDescentVisible) {
             startY = mTextPaint.getFontMetrics().descent;
             stopY = startY;
-            //mLinePaint.setColor(Color.BLUE);
             canvas.drawLine(startX, startY, stopX, stopY, mDescentPaint);
         }
 
         if (mIsBottomVisible) {
             startY = mTextPaint.getFontMetrics().bottom;
             stopY = startY;
-            // mLinePaint.setColor(ORANGE);
             mLinePaint.setColor(Color.RED);
-            canvas.drawLine(startX, startY, stopX, stopY, mBaselinePaint);
+            canvas.drawLine(startX, startY, stopX, stopY, mBottomPaint);
         }
 
         if (mIsBoundsVisible) {
@@ -170,7 +159,6 @@ public class FontMetricsView extends View {
         }
 
         if (mIsWidthVisible) {
-
 
             // get measured width
             float width = mTextPaint.measureText(mText);
