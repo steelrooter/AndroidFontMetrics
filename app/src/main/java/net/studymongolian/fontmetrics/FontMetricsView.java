@@ -112,7 +112,7 @@ public class FontMetricsView extends View {
         float startX = getPaddingLeft();
         float startY = 0;
         float stopX = this.getMeasuredWidth();
-        float stopY = 0;
+        float stopY;
 
         // draw text
         canvas.drawText(mText, startX, startY, mTextPaint); // x=0, y=0
